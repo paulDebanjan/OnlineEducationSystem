@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Notice Board{% endblock title %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/notice.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div class="notic-board-header">
+    <h1><u>Notice Board</u></h1>
+</div>
+<marquee behavior="" direction="" class="marquee-style"  onmouseover="stop()" onmouseout="start()" scrollamount="4">
+    {% for c in blogpostmodel_list %}
+      <a href="/blog/{{c.slug}}">**{{ c.title}}**</a> &nbsp; &nbsp;
+    {% endfor %}
+</marquee>
+
+<div class="container">
+
+    
+    <div>
+        {% for b in blogpostmodel_list %}
+            <div class="row">
+                <div class="card blog-card col-md-9">
+                    <div class="card-body">
+                    <h4 class="card-title">{{b.title}}</h4>
+                    <p class="card-text">{{b.description|slice:":250"|safe}} </p>
+                    <a href=""></a>
+                    <a href="{% url 'notice:blogDetail' slug=b.slug %}"><button class="btn start-btn">Read More</button></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
