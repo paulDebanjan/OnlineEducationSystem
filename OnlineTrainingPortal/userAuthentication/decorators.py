@@ -37,13 +37,5 @@ def admin_required(function):
             return PermissionDenied
             # return redirect('home')
     return wrap
-    
-def client_required(function):
-    def wrap(request, *args, **kwargs):
-        if request.user.is_admin and request.user.is_approved:
-            return function(request, *args, **kwargs)
-        else:
-            return PermissionDenied
-            # return redirect('home')
-    return wrap
+
     

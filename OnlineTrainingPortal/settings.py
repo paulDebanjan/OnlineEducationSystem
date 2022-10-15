@@ -54,7 +54,6 @@ LOCAL_APPS = [
     'OnlineTrainingPortal.enquiry.apps.EnquiryConfig',
     'OnlineTrainingPortal.student.apps.StudentConfig',
     'OnlineTrainingPortal.teacher.apps.TeacherConfig',
-    'OnlineTrainingPortal.dataCapture.apps.DatacaptureConfig',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 THIRD_PARTY_APPS = [
