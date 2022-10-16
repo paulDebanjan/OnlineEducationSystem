@@ -61,9 +61,6 @@ urlpatterns = [
     # VideoCall App urls
     path('videoCall/',videoCall,name='videoCall'),
 
-    # DataCapture Project
-    path('dataCapture/',include('OnlineTrainingPortal.dataCapture.urls')),
-
     # Enquiry App
     path('enquiry/',include('OnlineTrainingPortal.enquiry.urls')),
 

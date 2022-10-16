@@ -36,6 +36,12 @@ class CourseDetailView(DetailView):
         module_material = CourseMaterial.objects.filter(course_id = course.id)
         context['course_slug'] = self.kwargs['slug']
         context['schedules'] = schedules
+        count = 0
+        for schedule in schedules:
+            if schedule.start_date > date.today():
+                count += 1
+                break;
+        context["total_schedule"] = count
         context['dateToday'] = dateToday
         context['module_list'] = module_list
         context['module_material'] = module_material
@@ -47,7 +53,7 @@ class CourseDetailView(DetailView):
 class CourseCreateView(CreateView):
     model=Course
     # form_class = CourseForm
-    fields= ['title','image','topic','description','lesson','duration']
+    fields= ['title','video','topic','description','lesson','duration']
     template_name="form.html"
 
     def get_context_data(self, *args, **kwargs):
@@ -65,7 +71,7 @@ class CourseCreateView(CreateView):
 class CourseUpdateView(UpdateView):
     model=Course
     # form_class = CourseForm
-    fields= ['title','image','topic','description','lesson','duration']
+    fields= ['title','video','topic','description','lesson','duration']
     template_name="form.html"
 
     def get_context_data(self, *args, **kwargs):

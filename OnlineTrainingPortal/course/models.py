@@ -13,7 +13,7 @@ class Course(models.Model):
     image = models.FileField (upload_to='course/',max_length=250,null=True,default=None,blank=True)
     topic = models.CharField(max_length=150, null = True,blank=True)
     lesson = models.IntegerField()
-    duration = models.DurationField()
+    duration = models.IntegerField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     instructor = models.CharField(max_length=250,null=True)
     total_article = models.IntegerField(null=True,blank=True)

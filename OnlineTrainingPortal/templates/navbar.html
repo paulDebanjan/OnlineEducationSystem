@@ -35,7 +35,7 @@
                         {% endif %}
                         
                         {% if request.user.is_student or  not request.user.is_authenticated %}
-                        <li><a href="{% url 'course:home' %}" class="nav-link nav-item">Course</a></li>
+                        <li><a href="{% url 'course:home' %}" class="nav-link nav-item">Courses</a></li>
                         <li><a href="{% url 'notice:home' %}" class="nav-link nav-item">Notice</a></li>
                         
                         {% endif %}

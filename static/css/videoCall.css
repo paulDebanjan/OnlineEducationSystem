@@ -7,7 +7,7 @@ body{
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vh;
     height: 100%;
     display: none;
 }
@@ -16,7 +16,7 @@ body{
     top: 0;
     left: 0;
     margin: 16px;
-    border-radius: 16px;
+    border-radius: 4px;
     max-width: 20%;
     max-height: 20%;
     background: #fff;
