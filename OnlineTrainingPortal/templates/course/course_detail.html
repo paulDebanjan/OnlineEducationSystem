@@ -26,7 +26,8 @@
       </div>
     </div>
     </div>
-
+  </div>
+  
     <div class="row justify-content-md-center py-4 schedule-style schedule-style-main">
       <div class="col-md-8" style="border: 1px solid #EEE;">
         <table class="table schedule-style text-center">
@@ -53,13 +54,13 @@
           </tbody>
           {% if total_schedule == 1 %}
             <table>
-              <button id="enroll-btn" >Enroll Now</button>
+              <a href="{% url 'course:enrol_form' slug=course_slug %}" id="enroll-btn" class="btn">Enroll Now</a>
             </table>
           {% endif%}
         </table>
       </div>
     </div>
-  </div>
+  
 
   <div class="row">
     <div class="col col-md-1">
@@ -81,11 +82,19 @@
               <div id="flush-collapse{{module.id}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{module.id}}" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 material-iron-text">
                       {% for material in module_material %}
                         <div>
                           {% if material.module_id.id == module.id %}
-                            <div><a href="/media/{{material.data}}"><i class="fa-regular fa-hundred-points"></i>{{material.name}}  {{material.topic}}</a></div>
+                            {% if material.topic == "video" %}
+                            <div><a href="/media/{{material.data}}"><i class="far fa-play-circle"></i></i> <span>{{material.name}}</span></a></div>
+                            {% endif %}
+                            {% if material.topic == "slide" %}
+                            <div><a href="/media/{{material.data}}"><i class="far fa-file-powerpoint"></i> <span>{{material.name}}</span></a></div>
+                            {% endif %}
+                            {% if material.topic == "quiz" %}
+                            <div><a href="/media/{{material.data}}"><i class="far fa-lightbulb"></i> <span>{{material.name}}</span></a></div>
+                            {% endif %}
                           {% endif %}
                         </div>
                       {% endfor %}

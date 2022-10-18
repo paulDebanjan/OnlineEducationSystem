@@ -3,7 +3,8 @@
 {% block title %}{{blogpostmodel.title}}{% endblock title %}
 {% block stylesheet %}<link rel="stylesheet"  href="{% static 'css/notice.css' %}">{% endblock stylesheet %}
 {% block content %}
-  <div id="notice-container">
+  <div class="container-fluid">
+    <div id="notice-container">
       <div>     
         <h3 id="notice-title">{{blogpostmodel.title}}</h3>
         {% if blogpostmodel.created == blogpostmodel.updated %}
@@ -20,11 +21,12 @@
             <a href="/media/{{blogpostmodel.notice_file}}">
               <img src="{% static 'images/file_icon.png' %}" alt="file_icon">
               <br>  
-              <p>{{blogpostmodel.title|slice:15}}</p>
+              <p>download_doc</p>
             </a>
           </div>
           
         
       </div>
+  </div>
   </div>
 {% endblock content %}

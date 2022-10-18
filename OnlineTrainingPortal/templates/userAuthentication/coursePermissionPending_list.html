@@ -21,20 +21,20 @@
                 <th>Batch Name</th>
                 <th>Username</th>
                 <th>Phone Number</th>
-                <th>Method</th>
-                <th>Transaction ID</th>
+                <!-- <th>Method</th> -->
+                <!-- <th>Transaction ID</th> -->
                 <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for request in enrollform_list %}
                 <tr>
-                    <td class="align-middle"><a href="#">{{request.course_id}}</a></td>
+                    <td class="align-middle"><a href="#">{{ request.course_id|slice:":2" }}</a></td>
                     <td class="align-middle">{{request.schedule}}</td>
                     <td class="align-middle">{{request.user_id}}</td>
                     <td class="align-middle">{{ request.phone_number }}</td>
-                    <td class="align-middle">{{ request.transaction_method }}</td>
-                    <td class="align-middle">{{ request.transaction_id }}</td>
+                    <!-- <td class="align-middle">{{ request.transaction_method }}</td> -->
+                    <!-- <td class="align-middle">{{ request.transaction_id }}</td> -->
                     {% comment %} <td class="align-middle">{{ request.user}}</td> {% endcomment %}
                     <td class="text-right">
                     <a href="{% url 'userAuthentication:course_approved' pk=request.id %}" class="btn btn-primary">Accept</a>

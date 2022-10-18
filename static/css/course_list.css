@@ -73,3 +73,13 @@
     border: 1px solid rgb(243, 208, 36);
     border-radius: 5px;
 }
+.row{
+    margin-top: 0px;
+}
+
+.material-iron-text div div a i{
+    color: #E91E63;
+}
+.material-iron-text div div a span{
+    color: #546E7A;
+}

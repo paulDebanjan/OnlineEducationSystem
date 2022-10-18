@@ -28,7 +28,6 @@
             <thead>
                 <tr>
                 <th>Module Name</th>
-                <th>Course Name</th>
                 <th>Creator</th>
                 <th>Updated</th>
                 <th class="">Action</th>
@@ -38,7 +37,6 @@
                 {% for module in coursemodule_list %}
                 <tr>
                     <td class="align-middle text-right"><a href="{% url 'course:element_list' slug=slug_text slug2=module.slug %}">{{module.name}}</a></td>
-                    <td class="align-middle text-right">{{module.course_id}}</td>
                     <td class="align-middle">{{module.creator}}</td>
                     <td class="align-middle">{{module.updated}}</td>
                     <td class="text-center">

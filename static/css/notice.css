@@ -7,8 +7,13 @@
 }
 
 
+.container .notice-list-div{
+    padding: 15px 10px;
+}
 
-
+.container .notice-list-div .published-date {
+    color: #607D8B;
+}
 
 
 
