@@ -44,7 +44,7 @@
                 <tbody>
                     {% for material in coursematerial_list %}
                     <tr>
-                        <td class="align-middle text-right"><a href="{% url 'course:question_list' slug=course_slug slug2=module_slug slug3=material.slug %}">{{material.name|title}}</a></td>
+                        <td class="align-middle text-right">{{material.name|title}}</td>
                         {% if material.topic == "quiz" %}
                             <td class="align-middle text-right"><p style="background:#3d5afe; diplay:inline-block; margin:0; padding:0;">{{material.topic|title}}</p></td>
                         {% else %}
@@ -53,11 +53,11 @@
                         <td class="align-middle">{{ material.updated|date:"SHORT_DATE_FORMAT" }}</td>
                         <td class="text-center">
 
-                        {% comment %} {% if material.topic == 'quiz' %}
+                        {% if material.topic == 'quiz' %}
                             <a href="{% url 'course:question_list' slug=course_slug slug2=module_slug slug3=material.slug %}" class="btn btn-info">View Question</a>
                         {% else %}
-                            <a href="" class="btn btn-secondary">View Material</a>
-                        {% endif %} {% endcomment %}
+                            <a href="/media/{{material.data}}" class="btn btn-secondary">View Material</a>
+                        {% endif %}
 
                         <a href="{% url 'course:element_update' slug=course_slug slug2=module_slug pk=material.id %}" class="btn btn-warning">Edit</a>
                         {% comment %} <a href="{% url 'course:element_update' slug=course_slug slug2=module_slug slug3=material.slug %}" class="btn btn-warning">Edit</a> {% endcomment %}

@@ -107,7 +107,7 @@ body{
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  background: url(../images/banner.jpg);
+  background: url(../images/banner1.jpg);
   position: relative;
 }
 .banner:after{
@@ -134,8 +134,9 @@ body{
   border-color: #ffbd45 !important;
 }
 .start-btn:hover{
-  background-color: #fb8c00;
-  color: rgb(83, 80, 80) !important;
+  background-color: #2196F3 !important;
+  color: #FBE9E7 !important;
+  border: 1px solid #0e8df5 !important;
 
 }
 /* banner part Style end */
@@ -228,7 +229,7 @@ body{
 .card-background{
   width: 340px;
   height: 150px;
-  background-image: linear-gradient(#fb8c00,#fb8c00);
+  background-image: linear-gradient(#d69f5c,#ac7839);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -507,20 +508,6 @@ marquee a{
 /* form field css */
 
 
-/* meeting css */
-.video-grid-container{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    background: black;
-}
-.main-grid-container{
-    display: grid;
-    grid-template-columns: 60% 20%;
-}
-video{
-    border-radius: 0;
-    background-color: rgb(156, 96, 96);
-}
 
 
 /* registration login page css */

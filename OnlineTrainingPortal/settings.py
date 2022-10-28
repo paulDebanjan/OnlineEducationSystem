@@ -54,6 +54,7 @@ LOCAL_APPS = [
     'OnlineTrainingPortal.enquiry.apps.EnquiryConfig',
     'OnlineTrainingPortal.student.apps.StudentConfig',
     'OnlineTrainingPortal.teacher.apps.TeacherConfig',
+    'OnlineTrainingPortal.quizes.apps.QuizesConfig',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 THIRD_PARTY_APPS = [
@@ -142,7 +143,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [str( BASE_DIR / 'static' )]
+STATICFILES_DIRS = [
+    str( BASE_DIR / 'static' ),
+    BASE_DIR/'quizes'/'static'
+]
 # MEDIA_ROOT = str( APP_DIR / 'media' )
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = "userAuthentication.User"

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import MessageModel, GroupModel
 # Create your views here.
 
-def message(request,group_name):
+def message_view(request,group_name):
     group = GroupModel.objects.filter(group_name = group_name).first()
 
     if group:

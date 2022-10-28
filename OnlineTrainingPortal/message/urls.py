@@ -1,7 +1,11 @@
 from django.urls import path
-from message import views
+from . import views
 
-
+app_name = "message"
 urlpatterns = [
-    path('<str:group_name>/',views.index)
+    path(
+        route='group/<group_name>/',
+        view= views.message_view,
+        name = "message"
+        )
 ]

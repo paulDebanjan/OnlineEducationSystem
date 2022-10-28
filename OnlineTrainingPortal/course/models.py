@@ -81,9 +81,13 @@ class CourseMaterial(models.Model):
     updated = models.DateTimeField(auto_now=True, null=True)
     module_id = models.ForeignKey(CourseModule,on_delete=models.CASCADE)
     course_id = models.ForeignKey(Course,on_delete=models.CASCADE)
+    number_of_questions = models.IntegerField(default=0)
+    time = models.IntegerField(help_text="Duration of the quiz in minutes", null=True)
     slug = AutoSlugField("Material Address", unique=True, always_update=False, populate_from="name")
     def __str__(self):
         return self.name
+    def get_questions(self):
+        return self.question_set.all()[:self.number_of_questions]
 
 class Question(models.Model):
     creator = models.ForeignKey(User,on_delete=models.CASCADE,related_name='quizzes')
@@ -91,6 +95,8 @@ class Question(models.Model):
     material_id = models.ForeignKey(CourseMaterial,on_delete=models.CASCADE)
     def __str__(self):
         return self.text
+    def get_answers(self):
+        return self.answer__set.all()
 
 class Answer(models.Model):
     question = models.ForeignKey(Question,on_delete=models.CASCADE, related_name='answer')
@@ -100,6 +106,14 @@ class Answer(models.Model):
     def __str__(self):
         return self.text
 
+
+class Result(models.Model):
+    course_material = models.ForeignKey(CourseMaterial, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.FloatField()
+
+    def __str__(self):
+        return str(self.pk) 
 
 class EnrollForm(models.Model):
     class TranactionOption(models.TextChoices):

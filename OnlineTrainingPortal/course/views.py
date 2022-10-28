@@ -11,7 +11,9 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from OnlineTrainingPortal.userAuthentication.decorators import teacher_required,student_required, admin_required
 from .models import Answer, Course, CourseSchedule, CoursePermissionModel, CourseModule, CourseMaterial, Question, Answer, EnrollForm
+# from OnlineTrainingPortal.quizes.models import 
 from .forms import BaseAnswerInlineFormSet, QuestionForm
+from django.http import JsonResponse 
 
 admin_decorators_list = [login_required,admin_required]
 teacher_decorators_list = [login_required,teacher_required]
@@ -457,8 +459,8 @@ class QuestionCreateView(CreateView):
         return context
 
 
-# @login_required
-# @teacher_required
+@login_required
+@teacher_required
 def question_change(request, slug,slug2, slug3, question_pk):
 
     material_slug =CourseMaterial.objects.get(slug=slug3)
@@ -467,13 +469,13 @@ def question_change(request, slug,slug2, slug3, question_pk):
     question = get_object_or_404(Question, pk=question_pk, material_id=quiz)
 
     AnswerFormSet = inlineformset_factory(
-        Question,  # parent model
-        Answer,  # base model
+        Question,
+        Answer,
         formset=BaseAnswerInlineFormSet,
         fields=('text', 'is_correct'),
         min_num=2,
         validate_min=True,
-        max_num=10,
+        max_num=4,
         validate_max=True
     )
 
@@ -496,7 +498,6 @@ def question_change(request, slug,slug2, slug3, question_pk):
         'form': form,
         'formset': formset
     })
-
 
 @method_decorator(student_decorators_list,name='dispatch')
 class StudenEnrolFormView(CreateView):
@@ -522,3 +523,21 @@ class StudenEnrolFormView(CreateView):
         context['form_title'] = "Enrolment"
         context['button_topic'] = "Enrollment Request"
         return context
+    
+
+def quiz_view(request,pk):
+    quiz = CourseMaterial.objects.get(pk = pk)
+    return render(request, "quizes/quiz.html", {"obj":quiz})
+
+def quiz_data_view(request, pk):
+    quiz = CourseMaterial.objects.get(pk=pk)
+    questions = []
+    for q in quiz.get_questions():
+        answers = []
+        for a in q.get_answers():
+            answers.append(a.text)
+        questions.append({str(q):answers})
+    return JsonResponse({
+        "data": questions,
+        "time": quiz.time,
+    })

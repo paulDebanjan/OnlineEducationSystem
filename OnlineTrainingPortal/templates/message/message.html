@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{course.title|slice:40}}{% endblock title %}
+<!-- {% block stylesheet %}<link rel="stylesheet" href="{% static 'css/course_list.css' %}">{% endblock stylesheet %} -->
+<!-- {% block scripts %}<script src="{% static 'js/quiz.js' %}" defer></script>{% endblock scripts %} -->
+{% block content %}
     <h1>Chatting Group: {{group_name}}</h1>
 
     <textarea name="" id="chat-area" cols="100" rows="30">
@@ -62,8 +60,4 @@
     
     
     </script>
-</body>
-
-
-
-</html>
+{% endblock content %}

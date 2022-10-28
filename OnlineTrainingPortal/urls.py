@@ -15,8 +15,7 @@ from OnlineTrainingPortal.views import thank
 from django.conf.urls.static import static
 # Authentication 
 from OnlineTrainingPortal.userAuthentication import views as user_auth_views
-# Message App
-from OnlineTrainingPortal.message.views import message 
+
 #VideoCall App
 from OnlineTrainingPortal.videoCall.views import videoCall 
 # AdminSite App
@@ -36,6 +35,7 @@ urlpatterns = [
     
     # Course app Urls
     path('course/',include('OnlineTrainingPortal.course.urls')),
+    path('quiz/',include('OnlineTrainingPortal.quizes.urls')),
 
     # Blog App Urls
     path('blog/',include('OnlineTrainingPortal.blog.urls')),
@@ -56,7 +56,7 @@ urlpatterns = [
     path('administration/',include('OnlineTrainingPortal.administration.urls')),
 
     #Message URL
-    path('message/<str:group_name>/',message,name='message'),
+    path('message/',include('OnlineTrainingPortal.message.urls')),
 
     # VideoCall App urls
     path('videoCall/',videoCall,name='videoCall'),

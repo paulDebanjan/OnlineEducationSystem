@@ -157,4 +157,14 @@ urlpatterns = [
         view=views.CourseDetailView.as_view(),
         name='detailView'
     ),
+    path(
+        route='quiz/<pk>/',
+        view= views.quiz_view,
+        name="quiz_view"
+    ),
+    path(
+        route="quiz/<pk>/data",
+        view = views.quiz_data_view,
+        name = "quiz-data-view"
+    )
 ]

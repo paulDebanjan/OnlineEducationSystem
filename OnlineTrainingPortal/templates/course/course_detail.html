@@ -2,13 +2,32 @@
 {% load static %}
 {% block title %}{{course.title|slice:40}}{% endblock title %}
 {% block stylesheet %}<link rel="stylesheet" href="{% static 'css/course_list.css' %}">{% endblock stylesheet %}
+{% block scripts %}<script src="{% static 'js/quiz.js' %}" defer></script>{% endblock scripts %}
 {% block content %}
+<!-- Modal -->
+<div class="modal fade" id="quizStartModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Do You Want to Start?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="model-body-confirm">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" id="modalBtn" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container-fluid">
 <div class="row">
     <div class="col-md-9 course_title"><h2>{{course.title|slice:50}}</h2></h1></div>
     <div class="col-md-3">
       <a href="http://127.0.0.1:8000/message/{{course.course_title}}"><button class="btn btn-com msg-btn">Message</button></a>
-      <a href="{% url 'videoCall' %}"><button class="btn start-btn live-btn">Live Class</button></a></div>
+      <!-- <a href="{% url 'videoCall' %}"><button class="btn start-btn live-btn">Live Class</button></a></div> -->
+      <a href="http://127.0.0.1:4000/"><button class="btn start-btn live-btn">Live Class</button></a></div>
   </div>
   <div class="course_title">
     
@@ -27,7 +46,6 @@
     </div>
     </div>
   </div>
-  
     <div class="row justify-content-md-center py-4 schedule-style schedule-style-main">
       <div class="col-md-8" style="border: 1px solid #EEE;">
         <table class="table schedule-style text-center">
@@ -60,8 +78,6 @@
         </table>
       </div>
     </div>
-  
-
   <div class="row">
     <div class="col col-md-1">
     </div>
@@ -93,7 +109,15 @@
                             <div><a href="/media/{{material.data}}"><i class="far fa-file-powerpoint"></i> <span>{{material.name}}</span></a></div>
                             {% endif %}
                             {% if material.topic == "quiz" %}
-                            <div><a href="/media/{{material.data}}"><i class="far fa-lightbulb"></i> <span>{{material.name}}</span></a></div>
+                              <button
+                                  class="btn btn-link modal-button"
+                                  data-pk="{{material.pk}}"
+                                  data-quiz="{{material.name}}"
+                                  data-questions="{{material.number_of_questions}}"
+                                  data-time="{{material.time}}"
+                                  data-bs-toggle="modal" 
+                                  data-bs-target="#quizStartModel"><i class="far fa-lightbulb"></i><span>{{material.name}}</span>
+                              </button>
                             {% endif %}
                           {% endif %}
                         </div>
@@ -111,6 +135,5 @@
     <div class="col col-md-3">
     </div>
   </div>
-  
 </div>
 {% endblock content %}

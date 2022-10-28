@@ -11,8 +11,7 @@
                     data-bs-target="#toggleMobileMenu"
                     aria-controls="toggleMobileMenu"
                     aria-expanded="false"
-                    aria-label="Toggle navigation"
-                    
+                    aria-label="Toggle navigation"         
                 >
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -29,7 +28,9 @@
                             </div>
                            </div>
                         </form>
-                        <li><a href="{% url 'home' %}" class="nav-link nav-item">Home</a></li>
+                        {% if not request.user.is_student %}
+                            <li><a href="{% url 'home' %}" class="nav-link nav-item">Home</a></li>
+                        {% endif %}
                         {% if not request.user.is_authenticated%}
                         {% comment %} <li><a href="{% url 'course:corporateTraining' %}" class="nav-link nav-item">Corporate Training</a></li> {% endcomment %}
                         {% endif %}
