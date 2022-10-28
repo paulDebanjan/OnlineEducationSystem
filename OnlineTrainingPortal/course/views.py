@@ -10,7 +10,7 @@ from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from OnlineTrainingPortal.userAuthentication.decorators import teacher_required,student_required, admin_required
-from .models import Answer, Course, CourseSchedule, CoursePermissionModel, CourseModule, CourseMaterial, Question, Answer, EnrollForm
+from .models import Answer, Course, CourseSchedule, CoursePermissionModel, CourseModule, CourseMaterial, Question, Answer, EnrollForm, EnrollData
 # from OnlineTrainingPortal.quizes.models import 
 from .forms import BaseAnswerInlineFormSet, QuestionForm
 from django.http import JsonResponse 
@@ -39,6 +39,9 @@ class CourseDetailView(DetailView):
         context['course_slug'] = self.kwargs['slug']
         context['schedules'] = schedules
         count = 0
+        user_pk = self.request.user.pk
+        enroll_found = EnrollData.objects.filter(user_id = user_pk, course_id= course)
+        enoll_form_active = True
         for schedule in schedules:
             if schedule.start_date > date.today():
                 count += 1
@@ -46,7 +49,12 @@ class CourseDetailView(DetailView):
         context["total_schedule"] = count
         context['dateToday'] = dateToday
         context['module_list'] = module_list
-        context['module_material'] = module_material
+        if (enroll_found.count() == 1):
+            enoll_form_active = False
+            context['module_material'] = module_material
+        else:
+            enoll_form_active = True
+        context["enoll_form_active"] = enoll_form_active
         return context
  
     
@@ -343,7 +351,7 @@ class ModuleElementListView(ListView):
 @method_decorator(teacher_decorators_list,name='dispatch')
 class MaterialCreateView(CreateView):
     model = CourseMaterial
-    fields = ['name','data','topic']
+    fields = ['name','data','topic','time','number_of_questions']
     template_name="form.html"
 
     def get_context_data(self, *args, **kwargs):
@@ -426,8 +434,6 @@ class QuestionListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         element = CourseMaterial.objects.get(slug = self.kwargs['slug3'])
-        print(element.slug)
-        
         context['element_id'] = element.id
         context['element_slug'] = element.slug
         context['course_slug'] = self.kwargs['slug']

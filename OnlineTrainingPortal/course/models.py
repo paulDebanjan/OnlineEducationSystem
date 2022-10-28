@@ -67,7 +67,6 @@ class CourseModule(models.Model):
 
 class CourseMaterial(models.Model):
     class MaterialTopic(models.TextChoices):
-        UNSPECIFIED = 'unspecified',"unspecified"
         SLIDE = "slide","Slide"
         PDF = "pdf","PDF"
         VIDEO = "video", "Video"
@@ -75,7 +74,7 @@ class CourseMaterial(models.Model):
 
     name = models.CharField(max_length=255, null=False)
     data = models.FileField (upload_to='materials/',max_length=250,null=True,blank=True)
-    topic = models.CharField("Material Kind",max_length=12, choices=MaterialTopic.choices, default=MaterialTopic.UNSPECIFIED)
+    topic = models.CharField("Material Kind",max_length=12, choices=MaterialTopic.choices, default=None)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
@@ -132,5 +131,6 @@ class EnrollForm(models.Model):
 class EnrollData(models.Model):
     course_id = models.ForeignKey(Course,on_delete=models.CASCADE)
     user_id = models.OneToOneField(User,on_delete=models.CASCADE,unique=True)
+    schedule = models.ForeignKey(CourseSchedule, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)

@@ -118,7 +118,7 @@ class CoursePendingView(ListView):
 class CourseApprovedView(View):
     def get(self, request, *args, **kwargs):
         course_request = EnrollForm.objects.get(id=self.kwargs['pk'])
-        save_data = EnrollData(course_id = course_request.course_id, user_id=course_request.user_id)
+        save_data = EnrollData(course_id = course_request.course_id, user_id=course_request.user_id, schedule= course_request.schedule)
         save_data.save()
         course_request.delete()
         return redirect('userAuthentication:course_request')
