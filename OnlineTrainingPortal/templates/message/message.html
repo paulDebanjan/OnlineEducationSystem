@@ -1,4 +1,4 @@
-    {% extends "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block title %}{{course.title|slice:40}}{% endblock title %}
 <!-- {% block stylesheet %}<link rel="stylesheet" href="{% static 'css/course_list.css' %}">{% endblock stylesheet %} -->
@@ -32,7 +32,7 @@
         }
     ws.onmessage = function(event){
             const data = JSON.parse(event.data)
-            document.querySelector('#chat-area').value += (data.msg + '\n')
+            document.querySelector('#chat-area').value += `${data.user_id}: ${data.msg} \n`
         }
         ws.onerror = function(event){                                                   // JavaScipt chnnels property
             console.log('error orrured...')

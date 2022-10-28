@@ -375,7 +375,7 @@ class MaterialCreateView(CreateView):
 @method_decorator(teacher_decorators_list,name='dispatch')
 class MaterialUpdateView(UpdateView):
     model = CourseMaterial
-    fields = ['name','data','topic']
+    fields = ['name','data','topic','time','number_of_questions']
     template_name="form.html"
 
     def get_context_data(self, *args, **kwargs):
