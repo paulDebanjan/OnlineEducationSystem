@@ -21,18 +21,25 @@
     </div>
   </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 18px">
 <div class="row">
     <div class="col-md-9 course_title"><h2>{{course.title|slice:50}}</h2></h1></div>
     <div class="col-md-3">
-      <a href="http://127.0.0.1:8000/message/{{course.course_title}}"><button class="btn btn-com msg-btn">Message</button></a>
+      {% if enoll_form_active == True %}
+      <button class="btn btn-com msg-btn disabled">Message</button>
       <!-- <a href="{% url 'videoCall' %}"><button class="btn start-btn live-btn">Live Class</button></a></div> -->
-      <a href="http://127.0.0.1:4000/"><button class="btn start-btn live-btn">Live Class</button></a></div>
+      <button class="btn start-btn live-btn disabled">Live Class</button>
+      {% endif %}
+      {% if enoll_form_active == False %}
+      <a href="http://127.0.0.1:8000/message/group/{{course.slug}}"><button class="btn btn-com msg-btn">Message</button></a>
+      <!-- <a href="{% url 'videoCall' %}"><button class="btn start-btn live-btn">Live Class</button></a></div> -->
+      <a href="http://127.0.0.1:4000/"><button class="btn start-btn live-btn">Live Class</button></a>
+      {% endif %}
   </div>
   <div class="course_title">
     
   </div>
-  <div class="row">
+  <div class="row" style="margin-top: 10px;">
     <div class="col-md-4">
       <iframe width="380" height="209.5" src="https://www.youtube.com/embed/{{course.video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>

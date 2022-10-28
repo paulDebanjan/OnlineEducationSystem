@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
+    {% extends "base.html" %}
 {% load static %}
 {% block title %}{{course.title|slice:40}}{% endblock title %}
 <!-- {% block stylesheet %}<link rel="stylesheet" href="{% static 'css/course_list.css' %}">{% endblock stylesheet %} -->
@@ -9,10 +8,10 @@
 
     <textarea name="" id="chat-area" cols="100" rows="30">
         {% for msg in messages %}
-            {{msg.message}}   
+            {{msg.user_id.first_name}}: {{msg.message}}
         {% endfor %}
     </textarea> <br>          <!-- textarea box -->
-    <input type="text" id="message-writing-area" size="114">                        <!-- input box -->
+    <input type="text" id="message-writing-area" size="114" data-user_id="{{request.user.pk}}">                        <!-- input box -->
     <input type="button" value="Send Message" id="message-send-btn">                <!-- send buttion -->
 
     {{group_name | json_script:"group-name"}}                                       <!-- taking group value javaScript to html -->
@@ -31,12 +30,8 @@
         ws.onopen = function(event){                                                    // JavaScipt chnnels property
             console.log('websocket opened...')
         }
-    ws.onmessage = function(event){                                                     // JavaScipt chnnels property
-            console.log('Message Received...',event.data)
-            console.log('Message Received...',typeof(event.data))
+    ws.onmessage = function(event){
             const data = JSON.parse(event.data)
-            console.log(typeof(data))
-            console.log(data.msg)
             document.querySelector('#chat-area').value += (data.msg + '\n')
         }
         ws.onerror = function(event){                                                   // JavaScipt chnnels property
@@ -49,9 +44,13 @@
     
         document.getElementById('message-send-btn').onclick = function(event) {         // creating event handler
             const messageInputDom = document.getElementById('message-writing-area')     // seleting input send box
-            const message = messageInputDom.value                                       // taking message value from text input box
+            const message = messageInputDom.value
+            const modalBtn = document.getElementById("message-writing-area")                                      // taking message value from text input box
+            const user_id = modalBtn.getAttribute('data-user_id')
+            console.log(user_id)
             ws.send(JSON.stringify({                                                    // converting obj to string
-                'msg' : message                                                         // sending message
+                'msg' : message,                                                        // sending message
+                'user_id': user_id
             }))
             messageInputDom.value = ''                                                  // clearing message writing box
     

@@ -1,6 +1,7 @@
 from traceback import print_tb
 from channels.consumer import SyncConsumer,AsyncConsumer
 from .models import MessageModel, GroupModel
+from OnlineTrainingPortal.userAuthentication.models import User
 from channels.exceptions import StopConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import async_to_sync
@@ -28,9 +29,11 @@ class MySyncConsumer(SyncConsumer):
         print('websocket connected...',event['text'])
         print(type(event['text']))
         data = json.loads(event['text'])
-        print(data['msg'])
+        print(data['user_id'])
         group = GroupModel.objects.get(group_name = self.group_name)
-        message = MessageModel(message = data['msg'],group_name = group)
+        user_id = User.objects.get(pk = data['user_id'])
+        print(user_id)
+        message = MessageModel(message = data['msg'],group_name = group, user_id=user_id)
         message.save()
 
 
@@ -38,14 +41,16 @@ class MySyncConsumer(SyncConsumer):
             self.group_name,
             {
             'type' : 'msg.message',
-            'message' : event['text']
+            'message' : event['text'],
+            'user_id': data['user_id']
             })
 
     def msg_message(self,event):
         print('accual data',event['message'])
         self.send({
             'type' : 'websocket.send',
-            'text' : event['message']
+            'text' : event['message'],
+            'user_id': event['user_id']
         })
 
     def websocket_disconnect(self,event):
@@ -79,7 +84,8 @@ class MyAsyncConsumer(AsyncConsumer):
         group = await database_sync_to_async(GroupModel.objects.get)(group_name = self.group_name)
         message = MessageModel(
             message = data['msg'],
-            group_name = group
+            group_name = group,
+            user_id = self.user.pk
             )
         await database_sync_to_async (message.save)()
         await self.channel_layer.group_send(
